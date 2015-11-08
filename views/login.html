@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> InNet </title>
+    <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.min.css" rel="stylesheet">
+    <link href="/innet.min.css" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+    <div class="box loginscreen">
+        <div class="col-md-6 col-sm-offset-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h1 class="text-center">
+                        <span class="fa fa-sign-in logo">
+                            InNet 登入
+                        </span>
+                    </h1>
+                    <p class="encourage-quote text-center"> 行動勝於空談 事實勝於雄辯。</p>
+                    <form class="m-t">
+                        <div class="form-group">
+                            <input type="text" class="form-control login-input" placeholder="帳號" ng-model="LoginCtrl.user.account">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control login-input" placeholder="密碼" ng-model="LoginCtrl.user.password">
+                        </div>
+                        <button class="btn btn-primary block full-width m-b" value="login" ng-click="LoginCtrl.login()">送出</button>
+                    </form>
+                    <p>
+                        需要幫助
+                    </p>
+                </div> 
+            </div>
+            <p class="m-t"> <small>InNet App is designed by Roverzon Li &copy; 2014</small> </p>
+        </div>
+    </div>
+</body>
+</html>

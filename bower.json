@@ -1,0 +1,36 @@
+{
+  "name": "InNet2",
+  "version": "0.0.0",
+  "authors": [
+    "rov01 <roverzon@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "jquery": "~2.1.4",
+    "angular": "angularjs#~1.4.7",
+    "angular-ui-router": "~0.2.15",
+    "angular-ui": "~0.4.0",
+    "jquery-ui": "~1.11.4",
+    "underscore": "~1.8.3",
+    "leaflet": "~0.7.7",
+    "leaflet-draw": "leaflet.draw#~0.2.4",
+    "font-awesome": "~4.4.0",
+    "angular-filter": "~0.5.7",
+    "angular-jwt": "~0.0.9",
+    "a0-angular-storage": "~0.0.12",
+    "angular-bootstrap": "~0.14.3",
+    "angular-leaflet-directive": "~0.10.0"
+  }
+}
