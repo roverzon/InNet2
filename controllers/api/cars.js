@@ -4,13 +4,14 @@
 * @Last Modified by:   roverzon
 * @Last Modified time: 2015-05-14 16:10:28
 */
+
 'use strict';
 
 const router = require('express').Router();
 const Car 	 = require('../../models/car');
 
-router.post('/',function(req,res){
-	var car = new Car({
+router.post('/',(req,res) => {
+	let car = new Car({
 		type 		: req.body.type,  
 		corps 		: req.body.corps,
 		branch 		: req.body.branch, 
@@ -19,26 +20,26 @@ router.post('/',function(req,res){
 		functions 	: req.body.functions
 	});
 
-	car.save(function(err,car){
+	car.save((err,car) => {
 		if (err) {
 			return err
 		} else {
-			res.status(200).json(car);
+			return res.status(200).json(car);
 		};
 	});
 })
 
-router.get('/',function(req,res){
+router.get('/',(req,res) => {
 	if (req.query.corps) {
 		Car.find({
 			corps : req.query.corps
 		})
 		.sort({ id : 1 })
-		.exec(function(err, cars){
+		.exec((err, cars) => {
 			if (err) {
 				return err
 			} else {
-				res.json(cars);
+				return res.json(cars);
 			};
 		});
 	} else if (req.query.branch) {
@@ -46,11 +47,11 @@ router.get('/',function(req,res){
 			branch : req.query.branch
 		})
 		.sort({id : 1 })
-		.exec(function(err,cars){
+		.exec((err,cars) => {
 			if (err) {
 				return err
 			} else {
-				res.json(cars)
+				return res.json(cars)
 			};
 		})
 	} else if (req.query.onDuty){
@@ -59,30 +60,28 @@ router.get('/',function(req,res){
 			onDuty : req.query.onDuty
 		})
 		.sort({id : 1 })
-		.exec(function(err,cars){
+		.exec((err,cars) => {
 			if (err) {
 				return err;
 			} else {
-				res.json(cars);
+				return res.json(cars);
 			};
 		});
 
 	} else {
 		Car.find({})
 		.sort({ id : 1 })
-		.exec(function(err,cars){
+		.exec((err,cars) => {
 			if (err) {
 				return err
 			} else {
-				res.json(cars)
+				return res.json(cars)
 			}
 		})
 	};
-
-
 });
 
-router.put('/:id',function(req,res){
+router.put('/:id',(req,res) => {
 	Car.findOneAndUpdate({
 		_id : req.params.id
 	},
@@ -91,13 +90,13 @@ router.put('/:id',function(req,res){
 			isChecked : req.body.isChecked 
 		}
 	},
-	function(err){
+	(err) => {
 		if (err) {
 			return err
 		} else {
-			res.status(200).json({ result  : " modified"});
+			return res.status(200).json({ result  : " modified"});
 		};
 	});
 });
 
-module.exports = router;
+module.exports = router

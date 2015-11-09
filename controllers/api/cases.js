@@ -13,11 +13,11 @@ const Member  	= require('../../models/member');
 const Ntf 		= require('../../models/notification');
 const socketios = require('../../socketios');
 
-router.post('/',function(req,res){
+router.post('/',(req,res) => {
 	Case.find({})
 	.count()
-	.exec(function(err,total){
-		var newCase = new Case({
+	.exec((err,total) => {
+		let newCase = new Case({
 			caseId 			: total + 1 ,
 			address 		: req.body.address,
 			officerReceiver : req.body.officerReceiver, 
@@ -42,41 +42,41 @@ router.post('/',function(req,res){
 			battleRadiuss   : req.body.battleRadiuss
 		});
 
-		newCase.save(function(err, newCase){
+		newCase.save((err, newCase) => {
 			if (err) {
 				return err;
 			} else {
 				Car.populate(newCase,
 					{ 
 						path : "cars" 
-					},function(err, newCase){
+					},(err, newCase) => {
 						if (err) {
 							return err;
 						} else {
 							socketios.broadcast('newCase', newCase);
 						};
 				});
-				res.send(201);
+				return res.send(201);
 			};
 		});
 	})
 });
 
-router.get('/',function(req,res){
+router.get('/',(req,res) => {
 
-	var p = Number(req.query.page),
+	let p = Number(req.query.page),
 		itemsPerPage = Number(req.query.ipp);
 
 	Case.count({
 		corps : req.query.corps
-	},function(err,totalCases){
+	},(err,totalCases) => {
 		Case.find({
 			corps : req.query.corps 
 		})
 		.sort({ 'caseId' : -1 })
 		.where('caseId').gt( totalCases + 1  - (p * itemsPerPage  + 1) ).lt(   totalCases - ( (p - 1) * itemsPerPage ) + 1 )
 		.limit(100)
-		.exec(function(err, cases){
+		.exec((err, cases) => {
 			if (err) {
 				return err;
 			} else {
@@ -86,7 +86,7 @@ router.get('/',function(req,res){
 	})
 });
 
-router.get('/branch',function(req,res){
+router.get('/branch',(req,res) => {
 	if (req.query.accessLevel > 1 ) {
 		Case.find({
 			$and : [ { isOngoing : true} , { corps : req.query.corps } ]
@@ -95,11 +95,11 @@ router.get('/branch',function(req,res){
 		.limit(3)
 		.populate('cars')
 		.populate('ntf')
-		.exec(function(err,old_case){
+		.exec((err,old_case) => {
 			if (err) {
 				return err
 			} else {
-				res.json(old_case)
+				return res.json(old_case)
 			};
 		});
 	} else {
@@ -110,31 +110,31 @@ router.get('/branch',function(req,res){
 		.limit(3)
 		.populate('cars')
 		.populate('ntf')
-		.exec(function(err,old_case){
+		.exec((err,old_case) => {
 			if (err) {
 				return err
 			} else {
-				res.json(old_case);
+				return res.json(old_case);
 			};
 		});
 	};
 });
 
-router.get('/details/:caseId',function(req,res){
+router.get('/details/:caseId',(req,res) => {
 	Case.findById({
 		_id : req.params.caseId
 	})
 	.populate('cars')
 	.populate('branchIds')
 	.populate('ntf')
-	.exec(function(err,_case){
+	.exec((err,_case) => {
 		if (err) {
 			return err
 		} else {
 			Member
 			.populate(_case,
 				{path : "branchIds.members", match : {onDuty : true }},
-				function(err, members){
+				(err, members) => {
 					if (err) {
 						return err;
 					} else{
@@ -145,20 +145,20 @@ router.get('/details/:caseId',function(req,res){
 	});
 });
 
-router.get('/details',function(req,res){
+router.get('/details',(req,res) => {
 	Case.find({})
 	.populate('cars')
-	.exec(function(err,old_case){
+	.exec((err,old_case) => {
 		if (err) {
 			return err;
 		} else {
-			res.json(old_case);
+			return res.json(old_case);
 		};
 	});
 });
 
-router.put('/close',function(req,res){
-	console.log(req.body);
+router.put('/close',(req,res) => {
+	
 	Case.findOneAndUpdate({
 		_id : req.query.id
 	},{
@@ -167,33 +167,32 @@ router.put('/close',function(req,res){
 			endAt 	  	: req.body.endAt,
 			lastUpdate 	: req.body.endAt 
 		}
-	},function(err){
+	},(err) => {
 		if (err) {
 			return err
 		} else {
-			res.send(200);
+			return res.send(200);
 		};
 	});
 });
 
-router.get('/:caseId',function(req,res){
+router.get('/:caseId',(req,res) => {
 	Case.findById({
 		_id : req.params.caseId
 	})
 	.populate('cars','radioCode')
 	.populate('ntf')
-	.exec(function(err, _case){
+	.exec((err, _case) => {
 		if (err) {
 			return err
-		}else{
-			
+		} else {
 			return res.json(_case)	
 		}
 	});
 })
 
 
-router.put('/:caseId',function(req,res){
+router.put('/:caseId',(req,res) => {
 	Case.findOneAndUpdate({
 		_id : req.params.caseId
 	},
@@ -217,20 +216,20 @@ router.put('/:caseId',function(req,res){
 		},
 		$inc  : { updateCount : 1 }	
 	},
-	function(err) {
+	(err) => {
 		if (err) { return err };
-		res.send(200);
+		return res.send(200);
 	});
 });
 
-router.delete('/:caseId',function(req,res){
+router.delete('/:caseId',(req,res) => {
 	Case.remove({
 		_id : req.params.caseId
-	}, function(err) {
+	}, (err) =>  {
 		if (err) {
 			return err
 		} else {
-			res.send(204);
+			return res.send(204);
 		}
 	})
 });

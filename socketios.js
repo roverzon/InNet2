@@ -11,16 +11,16 @@ const config 		= require('./config/config');
 const sockets 		= [];
 	
 exports.connect = function(server){
-	var io = socketio.listen(server);
+	let io = socketio.listen(server);
 
 	io.use(socketioJwt.authorize({
 	  secret: config.secret,
 	  handshake: true
 	}));
 
-	io.on('connection',function(socket){
+	io.on('connection',(socket) => {
 		sockets.push(socket);	
-		socket.on('disconnect', function(){
+		socket.on('disconnect', () => {
 			_.remove(sockets,socket);
 			User.findOneAndUpdate({
 				username : socket.decoded_token.username
@@ -29,64 +29,64 @@ exports.connect = function(server){
 					online : false,
 					caseId : null 
 				}
-			}, function(err){
+			}, (err) => {
 				if (err) {
 					return err
 				} else{
 					User.findOne({
 						username : socket.decoded_token.username
-					},function(err,user){
+					},(err,user) => {
 						socket.emit('userDisconnect',{ username : user.username , online : user.online});
-						socket.broadcast.emit('userDisconnect',{ username : user.username , online : user.online});
+						return socket.broadcast.emit('userDisconnect',{ username : user.username , online : user.online});
 					});
 				};
 			})
 		});
 
-		socket.on('login',function(){
+		socket.on('login',() => {
 			User.findOneAndUpdate({
 				username : socket.decoded_token.username
 			},{
 				$set : {
 					online : true
 				}
-			},function(err){
+			},(err) => {
 				if (err) {
 					return err
 				} else{
 					User.findOne({
 						username : socket.decoded_token.username
-					},function(err,user){
+					},(err,user) => {
 						socket.emit('userLogin',{ username : user.username , online : user.online});
-						socket.broadcast.emit('userLogin',{ username : user.username , online : user.online});
+						return socket.broadcast.emit('userLogin',{ username : user.username , online : user.online});
 					});
 				};
 			})
 		});
 
-		socket.on('logout',function(){
+		socket.on('logout',() => {
 			User.findOneAndUpdate({
 				username : socket.decoded_token.username
 			},{
 				$set :{
 					online : false
 				}
-			},function(err){
+			},(err) => {
 				if (err) {
 					return err
 				} else{
 					User.findOne({
 						username : socket.decoded_token.username
-					},function(err,user){
+					},(err,user) => {
 						socket.emit('userLogout',{ username : user.username , online : user.online});
 						socket.broadcast.emit('userLogout',{ username : user.username , online : user.online});
-						socket.disconnect();
+						return socket.disconnect();
 					});
 				};
 			})
 		});
 
-		socket.on('stateUpdate', function(data){
+		socket.on('stateUpdate', (data) => {
 			socket.broadcast.emit('progressUpdate', data);
 			St.findOneAndUpdate({
 				_id : data.id
@@ -95,7 +95,7 @@ exports.connect = function(server){
 					progress : data.progress,
 					state 	 : data.progressState
 				}
-			},function(err){
+			},(err) => {
 				if (err) {
 					return err
 				} else{
@@ -104,15 +104,15 @@ exports.connect = function(server){
 			})
 		});
 
-		socket.on('timer',function(st){
+		socket.on('timer',(st) => {
 			socket.broadcast.emit('timerRunning', st);
-			St.findOneAndUpdate(function(){
+			St.findOneAndUpdate(() => {
 				_id : st.stId
 			},{
 				$set :{
 					timerRunning : st.timerRunning
 				}
-			},function(err){
+			},(err) => {
 				if (err) {
 					return err
 				} else{
@@ -121,8 +121,8 @@ exports.connect = function(server){
 			})
 		});
 
-		socket.on('createStrikeTeam', function(strikeTeam){
-			var newSt = new St({
+		socket.on('createStrikeTeam', (strikeTeam) => {
+			let newSt = new St({
 				id 				: strikeTeam.id, 
 				caseId 			: strikeTeam.caseId, 
 				branch  		: strikeTeam.branch, 
@@ -140,23 +140,20 @@ exports.connect = function(server){
 				creator 		: strikeTeam.creator
 			});
 
-			// console.log(newSt)
-
-			newSt.save(function(err,st){
-				console.log(err)
+			newSt.save((err,st) => {
 				if (err) {return err};
 				Member.populate(st,
 					{path : "members", match : { onDuty : true }},
-					function(err, st){
+					(err, st) => {
 						if (err) {
 							return err
 						} else {
-							io.sockets.emit('newSt', st);
+							return io.sockets.emit('newSt', st);
 						};
 				})
 			});
 
-			strikeTeam.members.forEach(function(member){
+			strikeTeam.members.forEach((member) => {
 				Member.findOneAndUpdate({
 					_id : member._id
 				},{
@@ -164,34 +161,34 @@ exports.connect = function(server){
 						isChecked : member.isChecked,
 						group 	  : member.group
 					}
-				},function(err){
+				},(err) => {
 					if (err) {return err};
 				});
 			});
 		})
 
-		socket.on('dismissStrikeTeam',function(strikeTeam){
+		socket.on('dismissStrikeTeam',(strikeTeam) => {
 			socket.broadcast.emit('dismiss',{stId :strikeTeam.id});
 			St.findOneAndUpdate({
 				_id : strikeTeam.id 
 			},{
 				isDismissed : true 
-			},function(err){
+			},(err) => {
 				if (err) { return err };
 			});
 
-			strikeTeam.members.forEach(function(member){
+			strikeTeam.members.forEach((member) => {
 				Member.findOneAndUpdate({
 					_id : member._id
 				},{
 					isChecked : false
-				},function(err){
+				},(err) => {
 					if (err) { return err };
 				});
 			});
 		});
 
-		socket.on('updateStrikeTeam',function(st){
+		socket.on('updateStrikeTeam',(st) => {
 			
 			socket.broadcast.emit('updateSt',st);
 			St.findOneAndUpdate({
@@ -204,12 +201,12 @@ exports.connect = function(server){
 					group 	 : st.group,
 					members  : st.memberIds
 				}
-			},function(err){
+			},(err) => {
 				if (err) { return err }
 				return
 			});
 
-			st.members.forEach(function(member){
+			st.members.forEach((member) => {
 				Member.findOneAndUpdate({
 					_id : member._id
 				},{
@@ -218,7 +215,7 @@ exports.connect = function(server){
 						mission : member.mission,
 						group : st.mission  
 					}
-				},function(err){
+				},(err) => {
 					if (err) { return err };
 					return 
 				})
@@ -227,8 +224,8 @@ exports.connect = function(server){
 	});
 }
 
-exports.broadcast = function( topic , data){
-	sockets.forEach(function(socket){
+exports.broadcast = ( topic , data) => {
+	sockets.forEach((socket) => {
 		socket.emit(topic, data);
 	})
 };

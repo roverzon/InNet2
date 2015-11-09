@@ -1,5 +1,7 @@
-const db = require('../config/database'),
-const Schema   = db.Schema,
+'use strict';
+
+const db = require('../config/database');
+const Schema   = db.Schema;
 const GeoLocationSchema = new Schema({
 		id 		: { type : Number, required : true },
 		corps  	: { type : String, required : true },

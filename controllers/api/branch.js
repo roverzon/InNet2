@@ -7,8 +7,8 @@ const StrikeTeam  	= require('../../models/strikeTeam');
 const async			= require('async');
 const socketios 	= require('../../socketios');
 
-router.post('/',function(req,res){
-	var branch = new Branch({
+router.post('/',(req,res) => {
+	let branch = new Branch({
 		name  		: req.body.name,
 		corps 		: req.body.corps,
 		pos 		: {
@@ -18,7 +18,7 @@ router.post('/',function(req,res){
 		}
 	});
 
-	branch.save(function(err,branch){
+	branch.save((err,branch) => {
 		if (err){
 			return err;
 		} else {
@@ -27,13 +27,13 @@ router.post('/',function(req,res){
 	});
 });
 
-router.get('/', function(req,res){
+router.get('/', (req,res) => {
 	if (req.query.corps) {
 		Branch.find({
 			corps : req.query.corps
 		})
 		.sort({ id : 1 })
-		.exec(function(err,branches){
+		.exec((err,branches) => {
 			if (err) {
 				return err
 			} else {
@@ -46,14 +46,14 @@ router.get('/', function(req,res){
 		})
 		.sort({ id : 1})
 		.populate('members')
-		.exec(function(err,branch){
+		.exec((err,branch) => {
 			if (err) { return err };
 			return res.status(200).json(branch)
 		});
 	} else { 
 		Branch.find({})
 	 	.sort({ id : 1 })
-	 	.exec(function(err,branches){
+	 	.exec((err,branches) => {
 	 		if (err) { 
 	 			return err;
 	 		} else {
@@ -63,19 +63,19 @@ router.get('/', function(req,res){
 	};
  });
 
-router.post('/onduty',function(req,res){
-	var branches = [];
+router.post('/onduty',(req,res) =>{
+	let branches = [];
 	async.waterfall([
-    	function(cb){
-    		var branches = []; 
-    		req.body.forEach(function(branch,i){
+    	(cb) => {
+    		let branches = []; 
+    		req.body.forEach((branch,i) => {
 				Branch.findOne({
 					name : branch
 				})
-				.exec(function(err,branch){
+				.exec((err,branch) => {
 					Member.populate(branch,
 							{path : "members", match : { onDuty : true }},
-							function(err, _branch){
+							(err, _branch) => {
 								if (err) {
 									return err;
 								} else {
@@ -88,7 +88,7 @@ router.post('/onduty',function(req,res){
 				});
 			});
 		}
-	],function(err,result){
+	],(err,result) => {
 		if (result) {
 			return res.json(result);
 		};
@@ -96,15 +96,15 @@ router.post('/onduty',function(req,res){
 	});
 });
 
-router.get('/:branchId',function(req,res){
+router.get('/:branchId',(req,res) => {
 	if (req.query.onDuty) {
 		Branch.findOne({
 			id : req.params.branchId
 		})
-		.exec(function(err,details){
+		.exec((err,details) => {
 			Member.populate(details,
 				{path : "members", match : {onDuty : true }},
-				function(err, _branch){
+				(err, _branch) => {
 					if (err) {
 						return err;
 					} else {
@@ -117,7 +117,7 @@ router.get('/:branchId',function(req,res){
 			id : req.params.branchId
 		})
 		.populate('members')
-		.exec(function(err,details){
+		.exec((err,details) => {
 			if (err) {
 				return err;
 			} else {
@@ -127,7 +127,7 @@ router.get('/:branchId',function(req,res){
 	}
 });
 
-router.put('/:branch',function(req,res){
+router.put('/:branch',(req,res) => {
 	Branch.findOneAndUpdate({
 		name : req.params.branch
 	},
@@ -139,7 +139,7 @@ router.put('/:branch',function(req,res){
 			safetyManager : req.body.safetyManager
 		}
 	},
-	function(err){
+	(err) => {
 		if (err) {
 			return err;
 		}else{
@@ -148,7 +148,7 @@ router.put('/:branch',function(req,res){
 	});
 });
 
-router.put('/',function(req,res){
+router.put('/',(req,res) => {
 
 	Branch.findOneAndUpdate({
 		name : req.query.branch
@@ -160,11 +160,11 @@ router.put('/',function(req,res){
 			safetyManager : req.body.safetyManager
 		}
 	},
-	function(err){
+	(err) => {
 		if (err) {
 			return err;
 		} else {
-			req.body.members.forEach(function(member){
+			req.body.members.forEach((member) => {
 				Member.findOneAndUpdate({
 					_id : member._id
 				},{
@@ -175,9 +175,8 @@ router.put('/',function(req,res){
 						groupId : member.groupId,
 						isChecked : member.isChecked 
 					}
-				},function(err){
+				},(err) => {
 					if (err) {return err}
-					return 
 				})
 			});
 			return  socketios.broadcast('onDutyUpdate',{ isUpated : true});

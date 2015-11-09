@@ -1,14 +1,14 @@
 'use strict';
 
-const router = require('express').Router();
-const Nft  	 = require('../../models/notification');
+const router    = require('express').Router();
+const Nft  		= require('../../models/notification');
 
-router.get('/',function(req,res){
-	Nft.find({},function(err,nfts){
+router.get('/',(req,res) => {
+	Nft.find({},(err,nfts) => {
 		if (err) {
 			return err
 		} else {
-			res.json(nfts);
+			return res.json(nfts);
 		};
 	});
 });

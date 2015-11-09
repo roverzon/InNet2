@@ -1,14 +1,12 @@
 'use strict';
 
-const router 	= require('express').Router();
-const TaskForce = require('../../models/taskForce');
-const Member    = require('../../models/member');
+const router 		= require('express').Router();
+const TaskForce 	= require('../../models/taskForce');
+const Member    	= require('../../models/member');
 
+router.post('/',(req,res) => {
 
-router.post('/',function(req,res){
-
-		var new_taskForce = new TaskForce({
-
+		let new_taskForce = new TaskForce({
 			id 				: req.body.id,
 			caseId 			: req.body.caseId,
 			position    	: req.body.position,
@@ -16,28 +14,26 @@ router.post('/',function(req,res){
 			members 		: req.body.members,
 			branches		: req.body.branches,
 			isDismissed 	: req.body.isDismissed
-
 		});
 
-		new_taskForce.save(function(err){
+		new_taskForce.save((err) => {
 			if (err) {return err};
-			res.json(201,"Task Force created");
-
+			return res.json(201,"Task Force created");
 		});
 	})
 
-router.get('/',function(req,res){
+router.get('/',(req,res) => {
 
 		TaskForce.find()
 		.populate('members')
-		.exec(function(err, taskForces){
+		.exec((err, taskForces) => {
 
 			if (err) {return err};
-			res.json(taskForces)
+			return res.json(taskForces)
 		});
 	})
 
-router.get('/:caseId',function(req,res){
+router.get('/:caseId',(req,res) => {
 
 		TaskForce.find({
 			$and : [
@@ -46,14 +42,14 @@ router.get('/:caseId',function(req,res){
 			]
 		})
 		.populate('members')
-		.exec(function(err,taskForces){
+		.exec((err,taskForces) => {
 			if (err) {return err};
-			res.json(taskForces)
+			return res.json(taskForces)
 		});
 		
 	})
 
-router.get('/:caseId/:branchName',function(req,res){
+router.get('/:caseId/:branchName',(req,res) => {
 		TaskForce.find({
 			$and : [
 				{ branches : req.params.branchName},
@@ -61,14 +57,14 @@ router.get('/:caseId/:branchName',function(req,res){
 			]
 		})
 		.populate('members')
-		.exec(function(err, total){
+		.exec((err, total) => {
 			if (err) {throw err};
-			res.json(total)
+			return res.json(total)
 		})
 		
 	})
 
-router.get('/:caseId/:branchName/count',function(req,res){
+router.get('/:caseId/:branchName/count',(req,res) => {
 		TaskForce.find({
 			$and : [
 				{ branches : req.params.branchName},
@@ -77,14 +73,14 @@ router.get('/:caseId/:branchName/count',function(req,res){
 			]
 		})
 		.count()
-		.exec(function(err, total){
+		.exec((err, total) => {
 			if (err) {throw err};
-			res.json(total)
+			return res.json(total)
 		})
 		
 	})
 
-router.get('/:caseId/:position/count',function(req,res){
+router.get('/:caseId/:position/count',(req,res) => {
 		TaskForce.find({
 			$and : [
 				{ position : req.params.position},
@@ -93,27 +89,26 @@ router.get('/:caseId/:position/count',function(req,res){
 			]
 		})
 		.count()
-		.exec(function(err, total){
+		.exec((err, total) => {
 			if (err) {throw err};
-			res.json(total)
+			return res.json(total)
 		})
 		
 	})
 
-router.get('/findById/:taskForceId',function(req,res){
+router.get('/findById/:taskForceId',(req,res) => {
 		TaskForce.find({
 			_id : req.params.taskForceId
 		})
 		.populate('members')
-		.exec(function(err, taskForce){
+		.exec((err, taskForce) => {
 			if (err) {throw err};
-			res.json(taskForce)
+			return res.json(taskForce)
 		})
 		
 	})
 
-router.put('/findById/:taskForceId',function(req,res){
-
+router.put('/findById/:taskForceId',(req,res) => {
 		TaskForce.update({
 			_id : req.params.taskForceId
 		},
@@ -124,11 +119,10 @@ router.put('/findById/:taskForceId',function(req,res){
 			branches		: req.body.branches,
 			isDismissed		: req.body.isDismissed
 		},
-		function(err){
+		(err) => {
 			if (err) {return err};
-			res.json("modified")
+			return res.json("modified")
 		});
-
-	})
+	});
 
 module.exports = router

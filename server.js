@@ -9,7 +9,9 @@ const app 		= express();
 app.use(morgan('dev'));
 app.use(require('./controllers'));
 
-
-app.listen(port,()=>{
+const server = app.listen(port,() =>{
 	console.log("Server is listening on " + port);
 });
+
+require('./socketios').connect(server);
+

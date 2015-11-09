@@ -5,7 +5,7 @@ const StrikeTeam 	= require('../../models/strikeTeam');
 const Member 		= require('../../models/member');
 const socketios 	= require('../../socketios');
 
-router.get('/',function(req,res){
+router.get('/',(req,res) => {
 	StrikeTeam.find({
 		$and : [
 			{ caseId 	  : req.query.caseId },
@@ -14,17 +14,17 @@ router.get('/',function(req,res){
 		]
 	})
 	.populate('members')
-	.exec(function(err, st){
+	.exec((err, st) => {
 		if (err) {
 			return err
 		} else {
-			res.json(st)
+			return res.json(st);
 		};
 	});
 });
 
-router.get('/total',function(req,res){
-	console.log(req.query);
+router.get('/total',(req,res) => {
+	
 	StrikeTeam.find({
 		$and : [
 			{ caseId : req.query.caseId},
@@ -32,16 +32,16 @@ router.get('/total',function(req,res){
 		]
 	})
 	.populate('members')
-	.exec(function(err, sts){
+	.exec((err, sts) => {
 		if (err) {
 			return err
 		} else {
-			res.json(sts)
+			return res.json(sts);
 		}
 	});
 });
 
-router.get('/count',function(req,res){
+router.get('/count',(req,res) => {
 	StrikeTeam.find({
 		$and : [
 			{ caseId   : req.query.caseId },
@@ -49,13 +49,13 @@ router.get('/count',function(req,res){
 		]
 	})
 	.count()
-	.exec(function(err, total){
+	.exec((err, total) => {
 		if (err) { 
 			return  err
 		}else{
-			res.json(total)
+			return res.json(total);
 		}
 	})	
 });
 
-module.exports = router
+module.exports = router;

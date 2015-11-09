@@ -3,8 +3,8 @@
 const router   	  = require('express').Router();
 const Geolocation = require('../../models/geoLocation');
 
-router.post('/',function(req,res){
-	var geoLocation = new Geolocation({
+router.post('/',(req,res) => {
+	let geoLocation = new Geolocation({
 		id 		: req.body.id,
 		corps   : req.body.corps,
 		branch  : req.body.branch,
@@ -12,25 +12,25 @@ router.post('/',function(req,res){
 		lng     : req.body.lng,
 		address : req.body.address
 	})
-	geoLocation.save(function(err,geos){
+	geoLocation.save((err,geos) => {
 		if (err) { return err };
-		res.status(200).json(geos);
+		return res.status(200).json(geos);
 	});
 })
 
-router.get('/',function(req,res){
+router.get('/',(req,res) => {
 	if (req.query.corps) {
 		Geolocation.find({
 			corps : req.query.corps
-		}).exec(function(err,geos){
-			res.status(200).json(geos)
+		}).exec((err,geos) => {
+			return res.status(200).json(geos)
 		})
 	} else {
 		Geolocation
 		.find({})
-		.exec(function(err,geos){
+		.exec((err,geos) => {
 			if (err) { return err };
-			res.status(200).json(geos)
+			return res.status(200).json(geos)
 		});
 	};
 });

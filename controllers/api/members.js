@@ -4,8 +4,8 @@ const router 	= require('express').Router();
 const socketios = require('../../socketios');
 const Member 	= require('../../models/member');
 
-router.post('/',function(req,res){
-	var member = new Member({
+router.post('/',(req,res) => {
+	let member = new Member({
 		title 			: req.body.title,  
 		id    			: req.body.id,
 		name 			: req.body.name,
@@ -18,70 +18,70 @@ router.post('/',function(req,res){
 		workingTime 	: parseInt(req.body.workingTime)
 	});
 
-	member.save(function(err){
+	member.save((err) => {
 		if (err) {
 			return err
 		} else {
-			res.json(201,"New Member created");
+			return res.json(201,"New Member created");
 		};
 	});
 });
 
-router.get('/',function(req,res){
+router.get('/',(req,res) => {
 	Member.find()
 	.sort('-date')
-	.exec(function(err, members){
+	.exec((err, members) => {
 		if (err) {
 			return err
 		} else {
-			res.json(members);
+			return res.json(members);
 		};
 	});
 });
 	
 
-router.get('/onDuty',function(req,res){
+router.get('/onDuty',(req,res) => {
  	Member.find({ $and :[
  		{branch : req.query.branch},
  		{onDuty : true }
  	]})
  	.sort({radioCode : 1})
- 	.exec(function(err,members){
+ 	.exec((err,members) => {
  		if (err) {
  			return err
  		} else {
- 			res.json(members);
+ 			return res.json(members);
  		};
  	});
  });
 	
-router.get('/:branchName', function(req,res){
+router.get('/:branchName', (req,res) => {
  	Member.find({ 
  		branch : req.params.branchName
  	})
  	.sort({radioCode : 1 })
- 	.exec(function( err, members){
+ 	.exec(( err, members) => {
  		if (err) { 
  			return err
  		} else {
- 			res.json(members);
+ 			return res.json(members);
  		};
  	}); 
  });
 
-router.get('/findById/:memberId',function(req,res){
+router.get('/findById/:memberId',(req,res) => {
 	Member.find({
 		_id : req.params.memberId
-	},function(err,member){
+	},(err,member) => {
 		if (err) {
 			return err
 		} else {
-			res.json(member)
+			return res.json(member);
 		};
 	});
 });
 
-router.put('/findById/:memberId',function(req,res){
+router.put('/findById/:memberId',(req,res) => {
 
 	Member.findOneAndUpdate({
 		_id : req.params.memberId
@@ -98,16 +98,16 @@ router.put('/findById/:memberId',function(req,res){
 			corps  		: req.body.corps
 		}
 	},
-	function(err){
+	(err) => {
 		if (err) {
-			return err
+			return err;
 		} else {
-			res.send(204)
+			return res.send(204);
 		};
 	});
 });
 
-router.put('/onDuty/findById',function(req,res){
+router.put('/onDuty/findById',(req,res) => {
 	Member.findOneAndUpdate({
 		_id : req.query.memberId
 	},{
@@ -115,16 +115,16 @@ router.put('/onDuty/findById',function(req,res){
 			mission : req.body.mission,
 			onDuty  : req.body.onDuty
 		}
-	},function(err){
+	},(err) => {
 		if (err) { 
 			return err 
 		} else {
-			res.send(200);
+			return res.send(200);
 		};
 	});
 });
 
-router.put('/',function(req,res){
+router.put('/',(req,res) => {
 	
 	Member.findOneAndUpdate({
 		_id : req.query.id
@@ -136,32 +136,32 @@ router.put('/',function(req,res){
 		}
 		
 	},
-	function(err){
+	(err) => {
 		if (err) {
 			return err
 		} else {
-			res.send(204);
+			return res.send(204);
 		};
 	});
 });
 
-router.put('/user',function(req,res){
+router.put('/user',(req,res) => {
 	Member.findOneAndUpdate({
 		name : req.query.member
 	},{
 		$set : {
 			isUser : true 
 		}
-	},function(err){
+	},(err) => {
 		if (err) {
 			return err
 		} else { 
-			res.send(204);
+			return res.send(204);
 		};
 	});
 });
 
-router.put('/user/remove',function(req,res){
+router.put('/user/remove',(req,res) => {
 	
 	Member.findOneAndUpdate({
 		name : req.query.username
@@ -169,39 +169,39 @@ router.put('/user/remove',function(req,res){
 		$set : {
 			isUser : false
 		}
-	},function(err){
+	},(err) => {
 		if (err) {
 			return err;
 		} else {
-			res.send(200);
+			return res.send(200);
 		};
 	});
 });
 
-router.put('/total', function(req,res){
+router.put('/total', (req,res) => {
 	Member.update({},
 		{	
 			isChecked : false
 		},
 		{
 			multi : true 
-		}, function(err){
+		}, (err) => {
 			if (err) {
 				return err;
 			} else {
-				res.send(200);
+				return res.send(200);
 			};
 	});
 });
 
-router.delete('/:memberId',function(req,res){
+router.delete('/:memberId',(req,res) => {
 	Member.findOneAndRemove({
 		_id : req.params.memberId
-	},function(err){
+	},(err) => {
 		if (err) { 
 			return err 
 		} else {
-			res.send(204);
+			return res.send(204);
 		};
 	});
 });
