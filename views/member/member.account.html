@@ -1,0 +1,28 @@
+<div class="inmodal">
+        <div class="modal-header">
+            <div class="btn btn-group pull-left">
+                <button class="btn btn-danger" ng-click="cancel()">取消</button>
+            </div>
+            <div class="btn btn-group pull-right">
+                <button class="btn btn-primary" ng-click="save()" >存擋</button>
+            </div>
+            <h4 class="modal-title">{{ user.name }} 帳號開通</h5>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal">
+                <p>請設定你的帳號與密碼</p>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">帳號</label>
+                    <div class="col-lg-10">
+                        <input type="text" placeholder="帳號" class="form-control" ng-model="user.account" required >
+                    </div>
+                </div>
+                <div class="form-group"><label class="col-lg-2 control-label">密碼</label>
+                    <div class="col-lg-10">
+                        <input type="password" placeholder="密碼" class="form-control" ng-model="user.password"
+                        required >
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>

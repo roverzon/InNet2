@@ -5,5 +5,10 @@
 	*
 	* Description
 	*/
-	angular.module('app.summary',[]);
+	angular.module('app.summary',[
+		'app.case',
+		'app.socket',
+		'app.strikeTeam',
+		'ui.router'
+	]);
 })();

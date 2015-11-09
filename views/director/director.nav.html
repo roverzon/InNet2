@@ -1,0 +1,26 @@
+<nav class="navbar-default navbar-static-side" role="navigation" ng-controller="NavCtrl">
+    <div class="sidebar-collapse">
+        <ul side-navigation class="nav" id="side-menu">
+            <li class="nav-header">
+                 <div class="dropdown profile-element" dropdown>
+                    <a class="dropdown-toggle" dropdown-toggle href>
+                        <span class="clear">
+                            <span class="block m-t-xs">
+                                <strong class="font-bold">{{username}}</strong>
+                            </span>
+                        </span>
+                    </a>
+                </div>
+                <div class="logo-element">
+                    InNet
+                </div>
+            </li>
+             <li ui-sref-active="active">
+                <a ui-sref="director.safety.index" ><i class="fa fa-list"></i> <span class="nav-label">案件資訊</span></a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="director.dutylist.index"><i class="fa fa-users"></i> <span class="nav-label">人員資訊</span></a>
+            </li>
+        </ul>
+    </div>
+</nav>

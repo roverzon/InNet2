@@ -4,5 +4,7 @@
 	*
 	* Description
 	*/
-	angular.module('app.map', [])
+	angular.module('app.map', [
+		'leaflet-directive'
+	])
 })();

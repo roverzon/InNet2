@@ -5,5 +5,9 @@
 	* Description
 	*/
 	angular
-		.module('app.dashboard',[]);
+		.module('app.dashboard',[
+			'app.socket',
+			'app.user',
+			'app.branch'
+		]);
 })();

@@ -5,5 +5,9 @@
 	*
 	* Description
 	*/
-	angular.module('app.dutylist', [])
+	angular.module('app.dutylist', [
+		'app.branch',
+		'app.socket',
+		'app.user'
+	])
 })();

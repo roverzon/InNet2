@@ -1,0 +1,80 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>案件登錄與安全管制</h2>
+    </div>
+</div>
+<div class="wrapper wrapper-content">
+	<div class="ibox">
+		<div class="ibox-title">
+		    <h5>所有列管案件</h5>
+		    <div class="pull-right">
+		        <a href="#/dutyDesk/case/new" class="btn btn-primary"><i class="fa fa-plus"> 新增案件 </i></a>
+		    </div>
+		</div>
+		<div class="ibox-content">
+			<div class="row m-b-sm m-t-sm">
+			    <div class="col-md-1">
+			        <button type="button" id="loading-example-btn" class="btn btn-white btn-sm" ng-click="queryCases()"><i class="fa fa-refresh"></i> 重新整理</button>
+			    </div>
+			    <div class="col-md-11">
+			        <div class="input-group">
+			        	<input type="text" placeholder="搜尋地址" class="input-sm form-control"> 
+		        		<span class="input-group-btn">
+		                	<button type="button" class="btn btn-sm btn-primary"> Go!</button> 
+		                </span>
+			        </div>
+			    </div>
+			</div>
+			<div class="project-list">
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<thead>
+							<tr class="text-center">
+								<td>案件編號</td>
+								<td>案件類型</td>
+								<td>詳細資訊</td>
+								<td>出勤單位數（車輛/單位）</td>
+								<td>案件環境</td>
+								<td>案件狀態</td>
+								<td>最新更新</td>
+								<td></td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="case in cases" class="text-center">
+								<td>
+									{{case.caseId}}
+								</td>
+								<td class="project-status">
+							        <span class="label label-danger">{{case.type}}</span>
+							    </td>
+							    <td class="project-title">
+							    	<a ui-sref="project_detail">{{case.address}}</a>
+							    	<br>
+							    	<small>{{case.createAt}}</small>
+							    </td>
+								<td>{{case.cars.length}} / {{case.branches.length}} </td>
+								<td>{{case.env}}</td>
+								<td>
+									<span class="label label-success" ng-if="case.isOngoing">進行中</span>
+									<span class="label label-primary" ng-if="!case.isOngoing">已結案</span>
+								</td>
+								<td><small>{{case.lastUpdate}}</small></td>
+								<td class="project-actions">
+							        <a href="#/dutyDesk/case/{{case._id}}/show" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 詳細資訊 </a>
+							        <a href="#/dutyDesk/case/{{case._id}}/edit" class="btn btn-white btn-sm" ng-disabled="!case.isOngoing"><i class="fa fa-pencil"></i> 編輯 </a>
+							    </td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="row">
+			    <div class="col-md-6 col-md-offset-5">
+			    	<pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" ng-change="pageChanged()"></pagination>
+			    </div>
+			</div>
+		</div>
+	</div>
+</div>
+

@@ -1,0 +1,54 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>派遣人員登錄</h2>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+<div class="wrapper wrapper-content">
+    <div class="ibox">
+        <div class="ibox-title">
+            <h5><strong>{{branch.name}}</strong></h5>
+            <div class="pull-right">
+                <a href="#/dutyDesk/dutylist/{{branch.id}}/edit" class="btn btn-primary btn-xs">編輯</a>
+            </div>    
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-md-8">
+                    <p><strong>總人數 :</strong> {{branch.members.length}} <strong> 上班人數 :</strong>  {{onDutyTotal.length}} </p>
+                    <p><strong>今日主管 :</strong> {{branch.director}} <strong>今日安全官 : </strong> {{branch.safetyManager}} </p> 
+                </div>              
+            </div>
+            <div class="project-list">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="text-center">派遣狀態</th> 
+                                <th class="text-center">代號</th>
+                                <th class="text-center">姓名</th>
+                                <th class="text-center">今日組別</th>
+                                <th class="text-center">今日任務</th>
+                            </tr>
+                        </thead>
+                        <tbody >
+                            <tr ng-repeat="member in branch.members" class="text-center">
+                                <td>
+                                    <span class="label label-primary" ng-if="member.onDuty">可出勤</span>
+                                    <span class="label label-success" ng-if="!member.onDuty">不可出勤</span>
+                                </td>
+                                <td>{{member.radioCode}}</td>
+                                <td>{{member.name}}</td>
+                                <td><p class="project_detail" ng-if="member.onDuty">{{member.group}} {{member.groupId}}</p>
+                                <td>
+                                    <p class="project_detail" ng-if="member.onDuty">{{member.mission}}</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

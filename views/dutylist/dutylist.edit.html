@@ -1,0 +1,67 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>派遣人員登錄</h2>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+<div class="wrapper wrapper-content">
+    <div class="ibox">
+        <div class="ibox-title">
+            <h5><strong>{{branch.name}}</strong></h5>
+            <div class="pull-right">
+                <a href="" class="btn btn-primary btn-xs" ng-click="save()">存檔</a>
+            </div>    
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-md-4">
+                     <h3><strong>今日帶隊官 :</strong></h3><select class="form-control m-b" ng-model='branch.director', ng-options='director for director in branch.directors'></select>
+                </div>
+                <div class="col-md-4">
+                    <h3 ng-if="!isCorps"><strong>安全管制員 :</strong></h3>
+                    <h3 ng-if="isCorps"><strong>安全官 :</strong></h3>
+                    <select class="form-control m-b" ng-model='branch.safetyManager', ng-options='safetyManager for safetyManager in branch.safetyManagers'></select>
+                </div>              
+            </div>
+            <div class="project-list">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="text-center">代號</th>
+                                <th class="text-center">姓名</th>
+                                <th class="text-center">今日組別</th>
+                                <th class="text-center">組別代號</th>
+                                <th class="text-center">今日任務</th>
+                                <th class="text-center"></th>
+                            </tr>
+                        </thead>
+                        <tbody >
+                            <tr ng-repeat="member in branch.members" class="text-center">
+                            <td>{{member.radioCode}}</td>
+                                <td>{{member.name}}</td>
+                                <td  class="project-title">
+                                  <select class="form-control m-b" ng-model='member.group', ng-options='group for group in member.groups' ng-if="member.onDuty"></select>
+                                <td>
+                                    <select class="form-control m-b" ng-model='member.groupId', ng-options='groupId for groupId in member.groupIds' ng-if="member.onDuty"></select>
+                                </td>
+                                <td>
+                                  <select class="form-control m-b" ng-model='member.mission', ng-options='mission for mission in member.missions' ng-if="member.onDuty"></select>
+                                </td>
+                                <td>
+                                    <div class="btn btn-primary" ng-if="member.onDuty" ng-click="check(member)">可出勤</div>
+                                    <div class="btn btn-warning" ng-if="!member.onDuty" ng-click="check(member)">不可出勤</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+                                

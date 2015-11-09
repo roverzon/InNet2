@@ -6,7 +6,7 @@
 	* Description
 	*/
 	angular
-		.module('app')
+		.module('app.layout')
 		.controller('LoginController',LoginController);
 
 		LoginController.$inject = ['UserSvc', 'store', '$state','jwtHelper','$http', 'SocketSvc'];

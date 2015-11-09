@@ -6,7 +6,7 @@
 	* Description
 	*/
 	angular
-		.module('app.topnav', [])
+		.module('app.layout', [])
 		.controller('TopNavController',TopNavController);
 
 	TopNavController.$inject = [];

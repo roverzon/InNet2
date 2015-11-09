@@ -5,5 +5,7 @@
 	*
 	* Description
 	*/
-	angular.module('app.timer', [])
+	angular.module('app.timer', [
+		'timer'
+	])
 })();

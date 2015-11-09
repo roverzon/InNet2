@@ -1,0 +1,41 @@
+<nav class="navbar-default navbar-static-side" role="navigation" ng-controller="NavCtrl">
+    <div class="sidebar-collapse">
+        <ul side-navigation class="nav" id="side-menu">
+            <li class="nav-header">
+                 <div class="dropdown profile-element" dropdown>
+                    <a class="dropdown-toggle" dropdown-toggle href>
+                        <span class="clear">
+                            <span class="block m-t-xs">
+                                <strong class="font-bold">{{username}}</strong>
+                            </span>
+                        </span>
+                    </a>
+                </div>
+                <div class="logo-element">
+                    InNet
+                </div>
+            </li>
+            <li>
+                 <a ui-sref="dutyDesk.corps" ng-if="isCorps"><i class="fa fa-newspaper-o"></i></i> <span class="nav-label">系統訊息</span></a>
+            </li>
+            <li>
+                <a ui-sref="dutyDesk.branch" ng-if="!isCorps"><i class="fa fa-newspaper-o"></i></i> <span class="nav-label">系統訊息</span></a>
+            </li>
+            <li>
+                <a ui-sref="dutyDesk.case.index" ng-if="isValid()"> <i class="fa fa-th-large"></i> <span class="nav-label">案件登錄</span></a>
+            </li>
+            <li ng-class="{active: $state.includes('dutyDesk')}">
+                <a ><i class="fa fa-tachometer"></i> <span class="nav-label">出勤人員</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level" ng-class="{in: $state.includes('dutyDesk')}">
+                    <li ui-sref-active="active" ng-repeat="branch in branches" ng-if="isValid(branch.name)"><a href="/#/dutyDesk/dutylist/{{branch.id}}">{{branch.name}}</a></li>
+                </ul>
+            </li>
+             <li ng-class="{active: $state.includes('dutyDesk')}">
+                <a ><i class="fa fa-users"></i> <span class="nav-label">人員資訊</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level" ng-class="{in: $state.includes('dutyDesk')}">
+                    <li ui-sref-active="active" ng-repeat="branch in branches" ng-if="isValid(branch.name)"><a href="/#/dutyDesk/member/{{branch.name}}">{{branch.name}}</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>

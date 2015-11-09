@@ -5,6 +5,13 @@
 	*
 	* Description
 	*/
-	angular.module('app.director', [])
+	angular.module('app.director', [
+		'app.branch',
+		'app.car',
+		'app.member',
+		'app.strikeTeam',
+		'app.user',
+		'ui.router'
+	])
 
 })();

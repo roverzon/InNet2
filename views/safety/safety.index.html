@@ -1,0 +1,39 @@
+<div class="wrapper wrapper-content">
+	<div class="ibox" ng-repeat="case in cases">
+		<div class="ibox-content">
+			<div class="row">
+				<div class="col-md-8">
+					<h3><strong> {{::case.type}} 案件 {{::case.caseId}} 地址 : {{::case.address}}</strong></h3>
+				</div>
+				<div class="col-md-4">
+					<a href="#/safety/{{case._id}}/show" class="btn btn-primary btn-block pull-right" ng-if="isBranchMember">接受派遣</a>
+					<a href="#/safety/cmd/{{case._id}}/show" class="btn btn-success btn-block pull-right" ng-if="!isBranchMember">接受派遣</a>
+				</div>
+			</div>	
+		</div>
+		<div class="ibox-content">
+			<div class="row">
+			    <div class="col-lg-5">
+			        <dl class="dl-horizontal" style="font-size:18;px;">
+			            <dt>報案人電話</dt>
+			            <dd>{{::case.phone}}</dd>
+			            <dt>出勤車輛</dt>
+			            <dd>{{::case.cars.length}}</dd>
+			            <dt>出勤分隊</dt>
+			            <dd>{{::case.dispatchBranches}}</dd>
+			            <dt>各式車輛</dt>
+			            <dd>{{::case.branches.length}}</dd>
+			        </dl>
+			    </div>
+			    <div class="col-lg-7" id="cluster_info">
+			        <dl class="dl-horizontal" style="font-size:18px;">
+			            <dt>最後更新</dt>
+			            <dd>{{::case.lastUpdate}}</dd>
+			            <dt>報案時間</dt>
+			            <dd>{{::case.createAt}}</dd>
+			        </dl>
+			    </div>
+			</div>
+		</div>
+	</div>
+</div>

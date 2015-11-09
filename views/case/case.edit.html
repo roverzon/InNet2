@@ -1,0 +1,139 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>修改案件</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+            <li class="active">
+                <strong>Project detail</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+<div class="wrapper wrapper-content">
+	<div class="row">
+		<div class="col-md-5">
+			<div class="ibox">
+				<div class="ibox-title">
+					<h3>地圖資訊</h3>	
+				</div>
+				<div class="ibox-content">
+					<leaflet center="nowPos" width="100%" height="350"></leaflet>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-7">
+			<div class="ibox">
+				<div class="ibox-title">
+					<div class="row">
+						<div class="col-sm-8">
+							<h3 class="project-title" >最新更新時間 <strong>{{currentTime}}</strong> </h3>
+						</div>
+						<div class="col-sm-4 pull-right">
+							<div class="btn btn-success btn-md pull-right" ng-click="save()">更新</div>
+						</div>
+					</div>
+				</div>
+				<div class="ibox-content">	
+					<form class="form-horizontal">
+			            <div class="form-group">
+			            	<label class="col-lg-2 control-label">案件地址</label>
+			                <div class="col-lg-10">
+			                	<input placeholder="案件地址" class="form-control" ng-model="currentCase.address"> 
+			                	<span class="help-block m-b-none"></span>
+			                </div>
+			            </div>
+			            <div class="form-group">
+			            	<label class="col-lg-2 control-label">報案人電話</label>
+			                <div class="col-lg-10">
+			                    <input placeholder="報案人電話" class="form-control" ng-model="currentCase.phone">
+			                </div>
+			            </div>
+			            <div class="form-group">
+			            	<label class="col-lg-2 control-label">災害類型</label>
+							<div class="col-lg-10">
+								<select class="form-control m-b" ng-model='currentCase.type', ng-options='type for type in currentCase.types'></select>
+							</div>
+			            </div>
+			            <div class="form-group">
+			                <label class="col-lg-2 control-label">搶救環境</label>
+			                <div class="col-lg-10">
+			                    <select class="form-control m-b" ng-model='currentCase.env', ng-options='env for env in currentCase.envs'></select>
+			                </div>
+			            </div>
+			             <div class="form-group" ng-if="currentCase.env==currentCase.envs[0]">
+			                <label class="col-lg-2 control-label">搶救樓層</label>
+			                <div class="col-lg-10">
+			                    <input type="text" class="form-control login-input" placeholder="currentCase.floor" ng-model="currentCase.floor">
+			                </div>
+			            </div>
+			             <div class="form-group">
+			                <label class="col-lg-2 control-label">火警提示</label>
+			                <div class="col-lg-10">
+			                    <select class="form-control m-b" ng-model='currentCase.ntf', ng-options='ntf for ntf in currentCase.ntfs'></select>
+			                </div>
+			            </div>
+			        </form>
+			        <btn href="" class="btn btn-block btn-danger" ng-click="terminateCase()">
+			        	結束案件
+			        </btn>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="ibox">
+		<div class="ibox-content">
+	        <div class="panel panel-default">
+	        	<div class="panel-heading">
+	        		<h3 class="panel-title">派遣車輛</h3>
+	        	</div>
+	        	<div class="panel-body">
+	        		<p>{{dispatchList}}</p>
+	        	</div>
+	        </div>
+	        <div class="row">
+	        	<div class="col-md-4">
+	        		<div class="panel panel-default">
+	        			<div class="panel-heading">
+	        				<h3 class="panel-title">分隊名冊</h3>
+	        			</div>
+	        			<ul class="list-group" ng-repeat="branch in branches" >
+	        				<a href="" class="list-group-item" ng-click="selectBranch(branch)">
+	        					<strong>{{branch.name}}</strong>
+	        				</a>
+	        			</ul>
+	        		</div>	
+	        	</div>
+	        	<div class="col-md-8">
+	        		<div class="project-list">
+	        			<div class="table-responsive">
+	        				<table class="table table-striped">
+		        			<thead >
+		        				<tr class="text-center" >
+		        					<td><h3><strong>車量種類</strong></h3></td>
+		        					<td><h3><strong>車輛代號</strong></h3></td>
+		        					<td><h3><strong>車輛狀態</strong></h3></tr>
+		        				</tr>
+		        			</thead>
+		        			<tbody>
+		        				<tr ng-repeat="car in cars | filterBy: ['branch']: currentBranch" class="text-center">
+		        					<td>{{car.type}}</td>
+		        					<td>{{car.radioCode}}</td>
+		        					<td class="project-status text-center">
+		        						<span class="label label-primary">可派遣</span>
+		        					</td>
+		        					<td class="project-actions">
+		        						<button class="btn btn-success" ng-if="!car.isChecked" ng-click="dispatch(car)">派遣</button> 
+		        						<button class="btn btn-warning" ng-if="car.isChecked" ng-click="cancelDispatch(car,$index)">取消</button>
+		        					</td>
+		        				</tr>
+		        			</tbody>
+			        		</table>
+		        		</div>
+	        		</div>
+	        	</div>
+	        </div>
+		</div>
+	</div>
+</div>

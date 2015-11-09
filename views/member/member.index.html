@@ -1,0 +1,54 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>人員資訊</h2>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+<div class="wrapper wrapper-content">
+	<div class="ibox">
+		<div class="ibox-title">
+			<h5><strong>人員資料</strong></h5>
+			<div class="pull-right">
+				<a  href="/#/dutyDesk/member/{{branch}}/edit" class="btn btn-success btn-xs">
+					<i class="fa fa pencil"></i>
+					<span>編輯</span>
+				</a>
+			</div>
+		</div>
+		
+		<div class="ibox-content">
+			<div class="project-list">
+				<div class="table-responsive">
+					<table class="table table-striped">
+						<thead>
+						    <tr>
+						        <th class="text-center">無線電代號</th>
+						        <th class="text-center">姓名</th>
+						        <th class="text-center">職稱</th>
+						        <th class="text-center">氣量時間</th>
+						        <th class="text-center">分隊</th>
+						        <th class="text-center">大隊</th>
+						        <th class="text-center">帳號狀態</th>
+						    </tr>
+						</thead>
+		                <tbody>
+		                    <tr ng-repeat="member in members track by $index" ng-class="{ warning : member.isUser}" class="text-center">
+		                        <td>{{::member.radioCodePrefix}} {{::member.radioCode}}</td>
+		                        <td>{{::member.name}}</td>
+		                        <td>{{::member.title}}</td>
+		                        <th>{{::member.workingTime.minutes()}} 分鐘  {{::member.workingTime.seconds()}} 秒</th>
+		                        <td>{{::member.branch}}</td>
+		                        <td>{{::member.corps}}</td>
+		                        <td>
+		                        	<spane class="label labe-warning" ng-if="member.isUser">已開通</spane>
+		                        	<span class="label label-primary" ng-if="!member.isUser">未開通</span>
+		                        </td>
+		                    </tr>
+		                </tbody>
+			        </table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

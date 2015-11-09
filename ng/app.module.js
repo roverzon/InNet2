@@ -1,19 +1,27 @@
 ;(function(){
 	'use strict';
 	angular.module('app',[
-		'app.router',
-		'app.directive',
-		'app.topnav',
+		'app.branch',
 		'app.case',
 		'app.car',
-		'app.branch',
+		'app.dashboard',	
+		'app.directive',
+		'app.director',
+		'app.dispatch',
+		'app.dutylist',
+		'app.geo',
+		'app.layout',
 		'app.map',
 		'app.member',
-		'app.strikeTeam',
+		'app.notification',
+		'app.router',
+		'app.safety',
 		'app.socket',
-		'app.user',
+		'app.summary',
+		'app.strikeTeam',
 		'app.timer',
-		'app.notification'
+		'app.user',
+		'angular.filter'
 	])
 })();
 

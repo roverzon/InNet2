@@ -1,0 +1,73 @@
+<div class="inmodal">
+    <div class="modal-header">
+    	<div class="btn btn-group pull-left">
+    		<button class="btn btn-danger" ng-click="cancel()">取消</button>
+    	</div>
+    	<div class="btn btn-group pull-right">
+    		<button class="btn btn-primary" ng-click="save()">存擋</button>
+    	</div>
+        <h4 class="modal-title">{{::title}}</h4>
+    </div>
+    <div class="modal-body">
+    	 <form class="form-horizontal">
+            <div class="alert alert-{{alert.type}}" role="alert" ng-repeat="alert in alerts">
+                <div class="row">
+                    <div class="col-md-9">
+                        {{alert.msg}}
+                    </div>
+                    <div class="col-md-3">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="closeAlert($index)"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                </div>              
+            </div>
+            <div class="form-group">
+            	<label class="col-xs-4 control-label">作戰位置</label>
+                <div class="col-xs-8">
+                     <select class="form-control" ng-model="strikeTeam.position" ng-options="position for position in strikeTeam.positions"></select>
+                </div>
+            </div>
+            <div class="form-group" ng-if="!apartment">
+                <label class="col-xs-4 control-label">作戰區域</label>
+                <div class="col-xs-8">
+                     <select class="form-control" ng-model="strikeTeam.area" ng-options="area for area in strikeTeam.areas"></select>
+                </div>
+            </div>
+             <div class="form-group" ng-if="apartment">
+                <label class="col-xs-4 control-label">作戰樓層</label>
+                <div class="col-xs-8">
+                     <select class="form-control" ng-model="strikeTeam.floor" ng-options="floor for floor in strikeTeam.floors"></select>
+                </div>
+            </div>
+            <div class="form-group">
+            	<label class="col-xs-4 control-label">作戰任務</label>
+                <div class="col-xs-8">
+                    <select class="form-control" ng-model="strikeTeam.group" ng-options="group for group in strikeTeam.groups"></select>
+                </div>
+            </div>
+        </form>
+        <table class="table table-striped">
+            <thead>
+                 <th class="text-center">姓名</th>
+                 <th class="text-center">工作時間</th>
+                 <th class="text-center">分工</th>
+                 <th class="text-center">編組</th>
+             </thead> 
+             <tbody>
+                 <tr ng-repeat="member in details.members" class="text-center">
+                     <td>{{::member.name}}</td>
+                     <td>{{::member.limitTime.minutes()}} 分鐘</td>
+                     <td>
+                           <select class="form-control" ng-model="member.mission" ng-options="mission for mission in member.missions"></select>
+                     </td>
+                     <td>
+                         <button class="btn btn-success" ng-click="check(member)" ng-if="!member.isChecked"> 編組 </button>
+                         <button class="btn btn-warning" ng-click="check(member)" ng-if="member.isChecked"> 取消 </button>
+                     </td>
+                 </tr>
+             </tbody>
+        </table>
+
+    </div>
+    <div class="modal-footer">
+    </div>
+</div>

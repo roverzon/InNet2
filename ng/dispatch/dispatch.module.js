@@ -5,5 +5,12 @@
 	*
 	* Description
 	*/
-	angular.module('app.dispatch', [])
+	angular.module('app.dispatch', [
+		'app.user',
+		'app.car',
+		'app.branch',
+		'app.case',
+		'ui.router',
+		'ui.bootstrap'
+	])
 })();

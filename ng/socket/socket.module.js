@@ -5,5 +5,7 @@
 	*
 	* Description
 	*/
-	angular.module('app.socket', []);
+	angular.module('app.socket', [
+		'angular-storage'
+	]);
 })();

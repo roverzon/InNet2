@@ -1,0 +1,101 @@
+<div class="inmodal">
+    <div class="modal-header">
+    	<div class="btn btn-group pull-left">
+    		<button class="btn btn-danger" ng-click="cancel()"  >取消</button>
+    	</div>
+    	<div class="btn btn-group pull-right">
+    		<button class="btn btn-primary" ng-click="save()" ng-if="isNew">存擋</button>
+    	</div>
+    	<div class="btn btn-group pull-right">
+    		<button class="btn btn-success" ng-click="update()" ng-if="!isNew">更新</button>
+    	</div>
+        <h4 class="modal-title">新增案件</h4>
+    </div>
+    <div class="modal-body">
+    	 <form class="form-horizontal">
+            <div class="form-group">
+            	<label class="col-lg-2 control-label">案件地址</label>
+                <div class="col-lg-10">
+                	<input placeholder="案件地址" class="form-control" ng-model="caseObj.address"> 
+                	<span class="help-block m-b-none"></span>
+                </div>
+            </div>
+            <div class="form-group">
+            	<label class="col-lg-2 control-label">報案人電話</label>
+                <div class="col-lg-10">
+                    <input placeholder="報案人電話" class="form-control" ng-model="caseObj.phone">
+                </div>
+            </div>
+            <div class="form-group">
+            	<label class="col-lg-2 control-label">災害類型</label>
+				<div class="col-lg-10">
+					<select class="form-control m-b" ng-model='caseObj.type', ng-options='type for type in caseObj.types'></select>
+				</div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">搶救環境</label>
+                <div class="col-lg-10">
+                    <select class="form-control m-b" ng-model='caseObj.env', ng-options='env for env in caseObj.envs'></select>
+                </div>
+            </div>
+             <div class="form-group" ng-if="caseObj.env==caseObj.envs[0]">
+                <label class="col-lg-2 control-label">搶救樓層</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control login-input" placeholder="caseObj.floor" ng-model="caseObj.floor">
+                </div>
+            </div>
+             <div class="form-group">
+                <label class="col-lg-2 control-label">火警提示</label>
+                <div class="col-lg-10">
+                    <select class="form-control m-b" ng-model='nftOption.nft', ng-options='nft.type for nft in nftOption.nfts'></select>
+                </div>
+            </div>
+        </form>
+        <div class="hr-line-dashed"></div>
+        <div class="panel panel-default">
+        	<div class="panel-heading">
+        		<h3 class="panel-title">派遣車輛</h3>
+        	</div>
+        	<div class="panel-body">
+        		<p>{{dispatchList}}</p>
+        	</div>
+        </div>
+        <div class="row">
+        	<div class="col-md-4">
+        		<div class="panel panel-default">
+        			<div class="panel-heading">
+        				<h3 class="panel-title">分隊名冊</h3>
+        			</div>
+        			<ul class="list-group" ng-repeat="branch in branches" >
+        				<a href="" class="list-group-item" ng-click="getCars(branch)">
+        					<strong>{{branch.name}}</strong>
+        				</a>
+        			</ul>
+        		</div>	
+        	</div>
+        	<div class="col-md-8">
+        		<table class="table table-striped">
+        			<thead>
+        				<th>車種</th>
+        				<th>代號</th>
+        				<th></th>
+        			</thead>
+        			<tbody>
+        				<tr ng-repeat="car in cars">
+        					<td>{{car.type}}</td>
+        					<td>{{car.radioCode}}</td>
+        					<td>
+        						<button class="btn btn-success" ng-if="!car.isChecked" ng-click="dispatch(car)">派遣</button> 
+        						<button class="btn btn-warning" ng-if="car.isChecked" ng-click="cancelDispatch(car)">取消</button>
+        					</td>
+        				</tr>
+        			</tbody>
+        		</table>
+        	</div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-warning btn-block" ng-click="closeCase()">案件結束</button>
+    </div>
+</div>
+

@@ -1,0 +1,56 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>現場人員登錄</h2>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+<div class="wrapper wrapper-content">
+    <div class="panel ui-tab">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="panel-title">
+                        <h2>登錄人數 : {{onDutyTotal.length}} 今日主管 : {{branch.director}} </h2>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <a class="btn btn-success btn-block" ui-sref="director.dutylist.edit">
+                        <span>編輯</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="list-group">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th class="text-center">姓名</th>
+                                <th class="text-center">職稱</th>
+                                <th class="text-center">任務</th>
+                                <th class="text-center">狀態</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="member in branch.members" ng-class="{ warning : member.onDuty}" class="text-center">
+                                <td>{{$index + 1 }}</td>
+                                <td>{{member.name}}</td>
+                                <td>{{member.title}}</td>
+                                <td>
+                                    <p ng-if="member.onDuty">{{member.mission}}</p>
+                                </td>
+                                <td>
+                                    <p ng-if="member.onDuty">已登錄</p>
+                                    <p ng-if="!member.onDuty">未登錄</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>

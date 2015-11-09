@@ -1,0 +1,84 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+	<div class="row">
+		<div class="col-lg-6">        
+	    	<h2>安全管控</h2>
+	    	<p>帶隊官 {{::details.director}}</p>
+	    	<p>出勤人數  {{::details.dispatchNum}}</p>
+    	</div>
+    	<div class="col-lg-4">
+    	</div>
+	    <div class="col-lg-2">
+	    	<div class="panel">
+	    		<div class="panel-body">
+	    			<select ng-if="ACCESSLEVEL > 1" class="form-control m-b" ng-model='branchOptions.branch', ng-options='branch for branch in branchOptions.branches'></select>
+    				<div class="btn btn-success btn-block" ng-click="strikeTeam()" ng-if="!quickStart">新增</div>
+    				<div class="btn btn-info btn-block" ng-if="quickStart" ng-click="quickOrganizing()">快速編組</div>
+	    		</div>
+	    	</div>
+	    </div>		
+	</div>
+</div>
+<div class="wrapper wrapper-content">
+	<div class="row">
+		<div class="col-sm-4" ng-repeat="strikeTeam in strikeTeams">
+			<div class="panel panel-default"  ng-controller="TimerCtrl">
+				<div class="panel-heading clearfix">
+					<h2 class="panel-title pull-left">
+						<strong>{{::strikeTeam.branch}} {{::strikeTeam.id}}  {{::strikeTeam.group}} </strong>	
+					</h2>
+					<div class="btn btn-group pull-right">
+						<div class="btn btn-success btn-sm" ng-click="startTimer(strikeTeam, $index)" >
+							<i class="fa fa-play"></i>
+							<span>開始</span>
+						</div>
+						<div class="btn btn-primary btn-sm" ng-click="stopTimer(strikeTeam, $index)">
+							<i class="fa fa-pause"></i>
+							<span>停止</span>
+						</div>
+						<div class="btn btn-warning btn-sm" ng-click="openSettingModal(strikeTeam, $index)" ng-if="!timerRunning">
+							<i class="fa fa-cog"></i>
+							<span>設定</span>
+						</div>
+					</div>
+				</div>
+				<div class="list-group">
+					<div class="list-group-item">
+						<timer countdown="strikeTeam.workingTime" interval="1000" autostart='false' st="strikeTeam">
+							<p list-group-item-text><strong>剩餘時間 : {{minutes}} 分 {{seconds}} 秒</strong><div ng-if="progressBar>0"> 進度 ( {{progressBar}}% ) </div></p>
+							<div class="progress progress-striped active "style="height: 30px;">
+								<div class="progress-bar {{progressState}} " style="width: {{progressBar}}%;"></div>
+							</div>
+						</timer>
+					</div>
+					<div class="list-group-item">
+						<div class="row">
+							<div class="col-sm-6">
+								<p class="list-group-item-text">負責區 : {{strikeTeam.position}}</p>
+								<p class="list-group-item-text" ng-if="!apartment">負責面 : {{strikeTeam.area}}</p>
+								<p class="list-group-item-text" ng-if="apartment">負責樓層 : {{strikeTeam.floor}}</p>
+							</div>
+							<div class="col-sm-6">
+								<p class="list-group-item-text">組別 : {{strikeTeam.group}}</p>
+							</div>
+						</div>
+					</div>
+					<div class="list-group-item" ng-repeat="member in strikeTeam.members">
+						<div class="row">
+							<div class="col-sm-6">
+								<h4 class="list-group-item-text">名稱 : {{::member.name}} </h4>
+								<p class="list-group-item-text">代號 : {{::member.radioCode}}</p>
+							</div>
+							<div class="col-sm-6">
+								<h4 class="list-group-item-text">任務 : {{member.mission}}</h4>
+								<p class="list-group-item-text">分隊 : {{::member.branch}}</p>
+							</div>
+						</div>
+					</div>	
+				</div>
+				<div class="panel-footer">
+					<div class="btn btn-block btn-danger" ng-click="dismiss(strikeTeam, $index)" ng-if="!timerRunning">解散</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
