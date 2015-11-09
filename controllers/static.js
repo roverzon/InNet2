@@ -16,7 +16,7 @@ router.use(express.static( path.join(__dirname , '/../views')));
 router.use(express.static( path.join(__dirname , '/../assets')));
 
 router.get('/',(req,res) => {
-	res.sendfile( path.join( __dirname , '../layout/index.html'));
+	res.sendFile( path.join( __dirname , '/../layout/index.html'));
 });
 
 module.exports = router;

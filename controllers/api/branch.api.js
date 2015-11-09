@@ -74,14 +74,13 @@ router.post('/onduty',(req,res) =>{
 				})
 				.exec((err,branch) => {
 					Member.populate(branch,
-							{path : "members", match : { onDuty : true }},
-							(err, _branch) => {
+							{path : "members", match : { onDuty : true }},(err, _branch) => {
 								if (err) {
 									return err;
 								} else {
 									branches.push(_branch);
 									if (i == req.body.length -1) {
-										cb('null',branches);
+										return cb('null',branches);
 									};
 								};
 						});
@@ -103,8 +102,7 @@ router.get('/:branchId',(req,res) => {
 		})
 		.exec((err,details) => {
 			Member.populate(details,
-				{path : "members", match : {onDuty : true }},
-				(err, _branch) => {
+				{path : "members", match : {onDuty : true }},(err, _branch) => {
 					if (err) {
 						return err;
 					} else {
@@ -138,8 +136,7 @@ router.put('/:branch',(req,res) => {
 			directors 	: req.body.directors,
 			safetyManager : req.body.safetyManager
 		}
-	},
-	(err) => {
+	},(err) => {
 		if (err) {
 			return err;
 		}else{
@@ -149,7 +146,6 @@ router.put('/:branch',(req,res) => {
 });
 
 router.put('/',(req,res) => {
-
 	Branch.findOneAndUpdate({
 		name : req.query.branch
 	},
@@ -159,8 +155,7 @@ router.put('/',(req,res) => {
 			dispatchNum : req.body.dispatchNum,
 			safetyManager : req.body.safetyManager
 		}
-	},
-	(err) => {
+	},(err) => {
 		if (err) {
 			return err;
 		} else {

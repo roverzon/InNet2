@@ -2,6 +2,7 @@
 	'use strict';
 	angular.module('app',[
 		'app.router',
+		'app.directive',
 		'app.topnav',
 		'app.case',
 		'app.car',
