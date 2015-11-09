@@ -68,7 +68,7 @@
 	        	lng : vm.nowPos.lng,
 	        	message : "現在位置"
 	        }
-	    })
+	    });
 
 	    angular.extend(vm, {
 	        nowPos: {
@@ -78,5 +78,5 @@
 	        },
 	        markers: {},
 	    });		
-	}
+	};
 })();

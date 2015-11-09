@@ -1,6 +1,6 @@
 (function(){
     angular
-        .module('app.directive')
+        .module('app')
         .directive('minimalizaSidebar',minimalizaSidebar)
         .directive('sideNavigation',sideNavigation)
         .directive('iboxTools',iboxTools)

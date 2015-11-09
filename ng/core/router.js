@@ -1,8 +1,8 @@
 ;(function(){
 	'use strict';
 	angular
-		.module('app.router',['ui.router'])
-		.config(routerConfig)
+		.module('app')
+		.config(routerConfig);
 
 		routerConfig.$inject = ['$stateProvider','$urlRouterProvider','$locationProvider'];
 		
@@ -127,22 +127,68 @@
 		            templateUrl  : "views/member/member.edit.html",
 		            controller 	 : "MemberEditController",
 		            controllerAs : "MemberEditCtrl"
-		        })
-		        .state('dutyDesk.car', {
+		        });
+			$stateProvider
+		        .state('director',{
 		            abstract : true,
-		            template : "<ui-view>"
+		            url : "",
+		            templateUrl : "views/director/director.content.html",
+		            data : {
+		                requiredLogin : true,
+		                role : ["user"]
+		            }
 		        })
-		        .state('dutyDesk.car.show',{
-		            url: "/car/:branch",
-		            templateUrl : "views/cars/car.index.html",
-		            controller : "CarIndexController",
-		            controllerAs : "CarIndexCtrl"
+		        .state('director.safety',{
+		            abstract : true,
+		            url : "/safety",
+		            template : "<ui-view>" 
 		        })
-		        .state('dutyDesk.car.edit',{
-		            url: "/car/:branch/edit",
-		            templateUrl : "views/cars/car.edit.html",
-		            controller : "CarEditController",
-		            controllerAs : "CarEditCtrl"
+		        .state('director.safety.index',{
+		            url : "/index",
+		            templateUrl : "views/safety/safety.index.html",
+		            controller : "SafetyIndexController",
+		            controllerAs : "SafetyIndexCtrl"
 		        })
+		        .state('director.safety.cmdShow',{
+		            url : "/cmd/:caseId/show",
+		            templateUrl : "views/safety/safety.cmd.show.html",
+		            controller : "SafetyCmdShowController",
+		            controllerAs : "SafetyCmdShowCtrl"
+		        })
+		        .state('director.safety.branchShow',{
+		            url : "/:caseId/show",
+		            templateUrl : "views/safety/safety.branch.show.html",
+		            controller : "SafetyShowController",
+		            controllerAs : "SafetyShowCtrl"
+		        })
+		        .state('director.safety.management',{
+		            url : "/:caseId/manage",
+		            templateUrl : "views/safety/safety.manage.html",
+		            controller : "SafetyManageController",
+		            controllerAs : "SafetyManageCtrl"         
+		        })
+		        .state('director.safety.summary',{
+		            url : "/:caseId/summary",
+		            templateUrl : "views/summary/summary.index.html",
+		            controller : "SummaryController",
+		            controllerAs : "SummaryCtrl"
+		        })
+		        .state('director.dutylist',{
+		            abstract : true,
+		            url : "/dutylist",
+		            template : "<ui-view>" 
+		        })
+		        .state('director.dutylist.index',{
+		            url : "/index",
+		            templateUrl: "views/dutylist/director.dutylist.index.html",
+		            controller : "DirDutyListController",
+		            controllerAs : "DirDutyListCtrl"
+		        })
+		        .state('director.dutylist.edit',{
+		            url : "/edit",
+		            templateUrl: "views/dutylist/director.dutylist.edit.html",
+		            controller : "DirDutyListEditController",
+		            controllerAs : "DirDutyListEditCtrl"
+		        })	
 		}
 })();

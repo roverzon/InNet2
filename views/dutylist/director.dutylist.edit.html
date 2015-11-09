@@ -11,8 +11,8 @@
             <div class="row">
                 <div class="col-lg-8">
                     <div class="panel-title">
-                        <h2>{{branch.name}} 總人數: {{branch.members.length}} </h2>
-                        <select class="form-control m-b" ng-model='branch.director', ng-options='director for director in branch.directors'></select>
+                        <h2>{{DutyListEditCtrl.branch.name}} 總人數: {{DutyListEditCtrl.branch.members.length}} </h2>
+                        <select class="form-control m-b" ng-model='DutyListEditCtrl.branch.director', ng-options='director for director in DutyListEditCtrl.branch.directors'></select>
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -37,14 +37,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="member in branch.members track by $index" class="text-center" >
+                            <tr ng-repeat="member in DutyListEditCtrl.branch.members track by $index" class="text-center" >
                                 <td>{{$index + 1 }}</td>
                                 <td>{{::member.name}}</td>
                                 <td>{{::member.title}}</td>
-                                <td><select class="form-control m-b" ng-model='member.mission', ng-options='mission for mission in member.missions'></select></td>
+                                <td><select class="form-control m-b" ng-model='DutyListEditCtrl.member.mission', ng-options='mission for mission in DutyListEditCtrl.member.missions'></select></td>
                                 <td>
-                                    <div class="btn btn-primary" ng-if="member.onDuty" ng-click="check(member)">已登錄</div>
-                                    <div class="btn btn-warning" ng-if="!member.onDuty" ng-click="check(member)">未登錄</div>
+                                    <div class="btn btn-primary" ng-if="member.onDuty" ng-click="DutyListEditCtrl.check(member)">已登錄</div>
+                                    <div class="btn btn-warning" ng-if="!member.onDuty" ng-click="DutyListEditCtrl.check(member)">未登錄</div>
                                 </td>
                             </tr>
                         </tbody>

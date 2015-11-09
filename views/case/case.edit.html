@@ -28,10 +28,10 @@
 				<div class="ibox-title">
 					<div class="row">
 						<div class="col-sm-8">
-							<h3 class="project-title" >最新更新時間 <strong>{{currentTime}}</strong> </h3>
+							<h3 class="project-title" >最新更新時間 <strong>{{CaseEditCtrl.currentTime}}</strong> </h3>
 						</div>
 						<div class="col-sm-4 pull-right">
-							<div class="btn btn-success btn-md pull-right" ng-click="save()">更新</div>
+							<div class="btn btn-success btn-md pull-right" ng-click="CaseEditCtrl.save()">更新</div>
 						</div>
 					</div>
 				</div>
@@ -40,42 +40,42 @@
 			            <div class="form-group">
 			            	<label class="col-lg-2 control-label">案件地址</label>
 			                <div class="col-lg-10">
-			                	<input placeholder="案件地址" class="form-control" ng-model="currentCase.address"> 
+			                	<input placeholder="案件地址" class="form-control" ng-model="CaseEditCtrl.currentCase.address"> 
 			                	<span class="help-block m-b-none"></span>
 			                </div>
 			            </div>
 			            <div class="form-group">
 			            	<label class="col-lg-2 control-label">報案人電話</label>
 			                <div class="col-lg-10">
-			                    <input placeholder="報案人電話" class="form-control" ng-model="currentCase.phone">
+			                    <input placeholder="報案人電話" class="form-control" ng-model="CaseEditCtrl.currentCase.phone">
 			                </div>
 			            </div>
 			            <div class="form-group">
 			            	<label class="col-lg-2 control-label">災害類型</label>
 							<div class="col-lg-10">
-								<select class="form-control m-b" ng-model='currentCase.type', ng-options='type for type in currentCase.types'></select>
+								<select class="form-control m-b" ng-model='CaseEditCtrl.currentCase.type', ng-options='type for type in CaseEditCtrl.currentCase.types'></select>
 							</div>
 			            </div>
 			            <div class="form-group">
 			                <label class="col-lg-2 control-label">搶救環境</label>
 			                <div class="col-lg-10">
-			                    <select class="form-control m-b" ng-model='currentCase.env', ng-options='env for env in currentCase.envs'></select>
+			                    <select class="form-control m-b" ng-model='CaseEditCtrl.currentCase.env', ng-options='env for env in CaseEditCtrl.currentCase.envs'></select>
 			                </div>
 			            </div>
-			             <div class="form-group" ng-if="currentCase.env==currentCase.envs[0]">
+			             <div class="form-group" ng-if="CaseEditCtrl.currentCase.env == CaseEditCtrl.currentCase.envs[0]">
 			                <label class="col-lg-2 control-label">搶救樓層</label>
 			                <div class="col-lg-10">
-			                    <input type="text" class="form-control login-input" placeholder="currentCase.floor" ng-model="currentCase.floor">
+			                    <input type="text" class="form-control login-input" placeholder="CaseEditCtrl.currentCase.floor" ng-model="CaseEditCtrl.currentCase.floor">
 			                </div>
 			            </div>
 			             <div class="form-group">
 			                <label class="col-lg-2 control-label">火警提示</label>
 			                <div class="col-lg-10">
-			                    <select class="form-control m-b" ng-model='currentCase.ntf', ng-options='ntf for ntf in currentCase.ntfs'></select>
+			                    <select class="form-control m-b" ng-model='CaseEditCtrl.currentCase.ntf', ng-options='ntf for ntf in CaseEditCtrl.currentCase.ntfs'></select>
 			                </div>
 			            </div>
 			        </form>
-			        <btn href="" class="btn btn-block btn-danger" ng-click="terminateCase()">
+			        <btn href="" class="btn btn-block btn-danger" ng-click="CaseEditCtrl.terminateCase()">
 			        	結束案件
 			        </btn>
 				</div>
@@ -89,7 +89,7 @@
 	        		<h3 class="panel-title">派遣車輛</h3>
 	        	</div>
 	        	<div class="panel-body">
-	        		<p>{{dispatchList}}</p>
+	        		<p>{{CaseEditCtrl.dispatchList}}</p>
 	        	</div>
 	        </div>
 	        <div class="row">
@@ -98,9 +98,9 @@
 	        			<div class="panel-heading">
 	        				<h3 class="panel-title">分隊名冊</h3>
 	        			</div>
-	        			<ul class="list-group" ng-repeat="branch in branches" >
-	        				<a href="" class="list-group-item" ng-click="selectBranch(branch)">
-	        					<strong>{{branch.name}}</strong>
+	        			<ul class="list-group" ng-repeat="branch in CaseEditCtrl.branches" >
+	        				<a href="" class="list-group-item" ng-click="CaseEditCtrl.selectBranch(branch)">
+	        					<strong>{{CaseEditCtrl.branch.name}}</strong>
 	        				</a>
 	        			</ul>
 	        		</div>	
@@ -109,26 +109,26 @@
 	        		<div class="project-list">
 	        			<div class="table-responsive">
 	        				<table class="table table-striped">
-		        			<thead >
-		        				<tr class="text-center" >
-		        					<td><h3><strong>車量種類</strong></h3></td>
-		        					<td><h3><strong>車輛代號</strong></h3></td>
-		        					<td><h3><strong>車輛狀態</strong></h3></tr>
-		        				</tr>
-		        			</thead>
-		        			<tbody>
-		        				<tr ng-repeat="car in cars | filterBy: ['branch']: currentBranch" class="text-center">
-		        					<td>{{car.type}}</td>
-		        					<td>{{car.radioCode}}</td>
-		        					<td class="project-status text-center">
-		        						<span class="label label-primary">可派遣</span>
-		        					</td>
-		        					<td class="project-actions">
-		        						<button class="btn btn-success" ng-if="!car.isChecked" ng-click="dispatch(car)">派遣</button> 
-		        						<button class="btn btn-warning" ng-if="car.isChecked" ng-click="cancelDispatch(car,$index)">取消</button>
-		        					</td>
-		        				</tr>
-		        			</tbody>
+			        			<thead >
+			        				<tr class="text-center" >
+			        					<td><h3><strong>車量種類</strong></h3></td>
+			        					<td><h3><strong>車輛代號</strong></h3></td>
+			        					<td><h3><strong>車輛狀態</strong></h3></tr>
+			        				</tr>
+			        			</thead>
+			        			<tbody>
+			        				<tr ng-repeat="car in CaseEditCtrl.cars | filterBy: ['branch']: currentBranch" class="text-center">
+			        					<td>{{car.type}}</td>
+			        					<td>{{car.radioCode}}</td>
+			        					<td class="project-status text-center">
+			        						<span class="label label-primary">可派遣</span>
+			        					</td>
+			        					<td class="project-actions">
+			        						<button class="btn btn-success" ng-if="!car.isChecked" ng-click="CaseEditCtrl.dispatch(car)">派遣</button> 
+			        						<button class="btn btn-warning" ng-if="car.isChecked" ng-click="CaseEditCtrl.cancelDispatch(car,$index)">取消</button>
+			        					</td>
+			        				</tr>
+			        			</tbody>
 			        		</table>
 		        		</div>
 	        		</div>

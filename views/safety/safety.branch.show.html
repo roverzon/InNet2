@@ -3,10 +3,10 @@
 		<div class="ibox-title">
 			<div class="row">
 				<div class="col-md-7">
-					<h2>{{::caseDetail.type}} {{::caseDetail.env}} <strong>{{::caseDetail.address}}</strong></h2>
+					<h2>{{::SafetyShowCtrl.caseDetail.type}} {{::SafetyShowCtrl.caseDetail.env}} <strong>{{::SafetyShowCtrl.caseDetail.address}}</strong></h2>
 				</div>
 				<div class="col-md-5">
-					<a href="#/safety/{{::caseDetail._id}}/manage" class="btn btn-primary btn-block pull-right">人員管控</a>
+					<a href="#/safety/{{::SafetyShowCtrl.caseDetail._id}}/manage" class="btn btn-primary btn-block pull-right">人員管控</a>
 				</div>
 			</div>
 		</div>
@@ -27,7 +27,7 @@
 					                            </tr>
 											</thead>
 											<tbody>
-												<tr ng-repeat="item in caseDetail.ntf.list" class="text-center">
+												<tr ng-repeat="item in SafetyShowCtrl.caseDetail.ntf.list" class="text-center">
 													<td><strong>{{::$index + 1}}</strong></td>
 													<td>{{::item}}</td>
 												</tr>
@@ -37,7 +37,7 @@
 									<div class="col-md-8">
 										<h2 class="text-info text-center">出勤車輛</h2>	
 										<div class="list-group clear-list">
-											<div class="list-group-item" ng-repeat="car in caseDetail.cars">		
+											<div class="list-group-item" ng-repeat="car in SafetyShowCtrl.caseDetail.cars">		
 												<div class="row">
 													<div class="col-sm-6">
 														<h4>{{::car.radioCode}}</h4>
@@ -61,7 +61,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr ng-repeat=" member in members" class="text-center">
+										<tr ng-repeat=" member in SafetyShowCtrl.members" class="text-center">
 											<td>{{::member.name}}</td>
 											<td>{{::member.group}} {{::member.groupId}}</td>
 											<td>{{::member.limitTime.minutes()}} 分鐘</td>
@@ -271,7 +271,7 @@
 			</div>	
 		</div>
 		<div class="ibox-content">
-			<a href="#/safety/{{::caseDetail._id}}/summary" class="btn btn-success btn-block">現場佈署</a>
+			<a href="#/safety/{{::SafetyShowCtrl.caseDetail._id}}/summary" class="btn btn-success btn-block">現場佈署</a>
 		</div>
 		<div class="ibox-content">
     		<leaflet center="nowPos" markers="markers" width="100%" height="100%"></leaflet>

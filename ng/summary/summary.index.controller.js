@@ -10,6 +10,7 @@
 		.controller('SummaryController',SummaryController);
 
 	SummaryController.$inject = ['StSvc', '$stateParams', '$interval', '$state', 'SocketSvc', 'CaseSvc'];
+	
 	function SummaryController(){
 		var vm = this; 
 		vm.isCollapsed = true ;

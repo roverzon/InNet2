@@ -11,7 +11,7 @@
 							<h3 class="pull-right">分面人員</h3>
 						</div>
 						<div class="col-md-7">
-							<select class="form-control m-b" ng-model='position.defaultPos', ng-options='pos for pos in position.positions'></select>
+							<select class="form-control m-b" ng-model='SummaryCtrl.position.defaultPos', ng-options='pos for pos in SummaryCtrl.position.positions'></select>
 						</div>
 					</div>
 				</div>
@@ -21,7 +21,7 @@
 			<div class="table-responsive">
 	    		<table class="table table table-bordered">
 		    		<thead>
-		    			<tr ng-if="!apartment">
+		    			<tr ng-if="!SummaryCtrl.apartment">
 		    				<th></th>
 		    				<th class="text-center">第一區</th>
 		    				<th class="text-center">第二區</th>
@@ -29,13 +29,13 @@
 		    				<th class="text-center">第四區</th>
 		    				<th class="text-center">第五區</th>
 		    			</tr>
-		    			<tr ng-if="apartment" >
+		    			<tr ng-if="SummaryCtrl.apartment" >
 		    				<th></th>
-		    				<th ng-repeat=" floor in position.floors" class="text-center"> {{::floor}} 樓</th>
+		    				<th ng-repeat="floor in SummaryCtrl.position.floors" class="text-center"> {{::floor}} 樓</th>
 		    			</tr>
 		    		</thead>
 		    		<tbody>
-		    			<tr ng-repeat="deploy in deploys" ng-if="!apartment" class="text-center">
+		    			<tr ng-repeat="deploy in SummaryCtrl.deploys" ng-if="!apartment" class="text-center">
 		    				<td>第 {{::$index + 1 }} 面</td>
 		    				<td ng-repeat="area in deploy track by $index">
 		    					<p ng-repeat="st in area.sts">
@@ -43,7 +43,7 @@
 		    					</p>
 		    				</td>
 		    			</tr>
-		    			<tr ng-repeat="deploy in deploys" ng-if="apartment" class="text-center">
+		    			<tr ng-repeat="deploy in SummaryCtrl.deploys" ng-if="apartment" class="text-center">
 		    				<td>第 {{::$index + 1  }} 面</td>
 		    				<td ng-repeat="floor in deploy track by $index">
 		    					<p ng-repeat=" st in floor.sts"> {{::st.id}} ({{::st.number}})人</p>
@@ -55,7 +55,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div ng-repeat="strikeTeam in strikeTeams |  filterBy: ['position']:position.defaultPos">
+		<div ng-repeat="strikeTeam in SummaryCtrl.strikeTeams |  filterBy: ['position']: SummaryCtrl.position.defaultPos">
 			<div class="panel panel-default" >
 				<div class="panel-heading clearfix">
 					<h2 class="panel-title pull-left">
@@ -83,7 +83,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="list-group-item" ng-repeat="member in strikeTeam.members">
+					<div class="list-group-item" ng-repeat="member in SummaryCtrl.strikeTeam.members">
 						<div class="row">
 							<div class="col-sm-6">
 								<h4 class="list-group-item-text">名稱: {{::member.name}} </h4>

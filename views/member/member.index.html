@@ -33,7 +33,7 @@
 						    </tr>
 						</thead>
 		                <tbody>
-		                    <tr ng-repeat="member in members track by $index" ng-class="{ warning : member.isUser}" class="text-center">
+		                    <tr ng-repeat="member in MemberEditCtrl.members track by $index" ng-class="{ warning : member.isUser}" class="text-center">
 		                        <td>{{::member.radioCodePrefix}} {{::member.radioCode}}</td>
 		                        <td>{{::member.name}}</td>
 		                        <td>{{::member.title}}</td>

@@ -14,7 +14,7 @@
 		<div class="ibox-content">
 			<div class="row m-b-sm m-t-sm">
 			    <div class="col-md-1">
-			        <button type="button" id="loading-example-btn" class="btn btn-white btn-sm" ng-click="queryCases()"><i class="fa fa-refresh"></i> 重新整理</button>
+			        <button type="button" id="loading-example-btn" class="btn btn-white btn-sm" ng-click="CaseCtrl.queryCases()"><i class="fa fa-refresh"></i> 重新整理</button>
 			    </div>
 			    <div class="col-md-11">
 			        <div class="input-group">
@@ -41,7 +41,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="case in cases" class="text-center">
+							<tr ng-repeat="case in CaseCtrl.cases" class="text-center">
 								<td>
 									{{case.caseId}}
 								</td>
@@ -71,7 +71,7 @@
 			</div>
 			<div class="row">
 			    <div class="col-md-6 col-md-offset-5">
-			    	<pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" ng-change="pageChanged()"></pagination>
+			    	<pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" ng-change="CaseCtrl.pageChanged()"></pagination>
 			    </div>
 			</div>
 		</div>

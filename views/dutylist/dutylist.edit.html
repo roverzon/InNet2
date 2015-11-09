@@ -8,7 +8,7 @@
 <div class="wrapper wrapper-content">
     <div class="ibox">
         <div class="ibox-title">
-            <h5><strong>{{branch.name}}</strong></h5>
+            <h5><strong>{{DirDutyListEditCtrl.branch.name}}</strong></h5>
             <div class="pull-right">
                 <a href="" class="btn btn-primary btn-xs" ng-click="save()">存檔</a>
             </div>    
@@ -16,12 +16,12 @@
         <div class="ibox-content">
             <div class="row">
                 <div class="col-md-4">
-                     <h3><strong>今日帶隊官 :</strong></h3><select class="form-control m-b" ng-model='branch.director', ng-options='director for director in branch.directors'></select>
+                     <h3><strong>今日帶隊官 :</strong></h3><select class="form-control m-b" ng-model='DirDutyListEditCtrl.branch.director', ng-options='director for director in DirDutyListEditCtrl.branch.directors'></select>
                 </div>
                 <div class="col-md-4">
-                    <h3 ng-if="!isCorps"><strong>安全管制員 :</strong></h3>
-                    <h3 ng-if="isCorps"><strong>安全官 :</strong></h3>
-                    <select class="form-control m-b" ng-model='branch.safetyManager', ng-options='safetyManager for safetyManager in branch.safetyManagers'></select>
+                    <h3 ng-if="!DirDutyListEditCtrl.isCorps"><strong>安全管制員 :</strong></h3>
+                    <h3 ng-if="DirDutyListEditCtrl.isCorps"><strong>安全官 :</strong></h3>
+                    <select class="form-control m-b" ng-model='DirDutyListEditCtrl.branch.safetyManager', ng-options='safetyManager for safetyManager in DirDutyListEditCtrl.branch.safetyManagers'></select>
                 </div>              
             </div>
             <div class="project-list">
@@ -38,7 +38,7 @@
                             </tr>
                         </thead>
                         <tbody >
-                            <tr ng-repeat="member in branch.members" class="text-center">
+                            <tr ng-repeat="member in DirDutyListEditCtrl.branch.members" class="text-center">
                             <td>{{member.radioCode}}</td>
                                 <td>{{member.name}}</td>
                                 <td  class="project-title">
@@ -50,8 +50,8 @@
                                   <select class="form-control m-b" ng-model='member.mission', ng-options='mission for mission in member.missions' ng-if="member.onDuty"></select>
                                 </td>
                                 <td>
-                                    <div class="btn btn-primary" ng-if="member.onDuty" ng-click="check(member)">可出勤</div>
-                                    <div class="btn btn-warning" ng-if="!member.onDuty" ng-click="check(member)">不可出勤</div>
+                                    <div class="btn btn-primary" ng-if="member.onDuty" ng-click="DirDutyListEditCtrl.check(member)">可出勤</div>
+                                    <div class="btn btn-warning" ng-if="!member.onDuty" ng-click="DirDutyListEditCtrl.check(member)">不可出勤</div>
                                 </td>
                             </tr>
                         </tbody>

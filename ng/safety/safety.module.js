@@ -11,6 +11,7 @@
 		'app.geo',
 		'app.socket',
 		'app.strikeTeam',
+		'app.timer',
 		'app.user',
 		'ui.bootstrap',
 		'ui.router'

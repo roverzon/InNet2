@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-lg-8">
                     <div class="panel-title">
-                        <h2>登錄人數 : {{onDutyTotal.length}} 今日主管 : {{branch.director}} </h2>
+                        <h2>登錄人數 : {{DutyListCtrl.onDutyTotal.length}} 今日主管 : {{DutyListCtrl.branch.director}} </h2>
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -35,7 +35,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="member in branch.members" ng-class="{ warning : member.onDuty}" class="text-center">
+                            <tr ng-repeat="member in DutyListCtrl.branch.members" ng-class="{ warning : member.onDuty}" class="text-center">
                                 <td>{{$index + 1 }}</td>
                                 <td>{{member.name}}</td>
                                 <td>{{member.title}}</td>
